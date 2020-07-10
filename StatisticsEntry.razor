@@ -1,0 +1,381 @@
+﻿@using LoreSoft.Blazor.Controls
+@using SLCRoad.Data.Model
+
+<main>  
+ 
+
+<div id="header">
+
+    <h3 class="statheader">Spanish Lookout Community Statistics</h3>
+    <p class="instruct">
+        Please fill out the following forms with the information that applies to you.
+        <b>The information that you fill out on this device is stored on this device</b>,
+        so if you must pause for any reason, you may return later and continue filling out the form on this device.
+        Please note, however, that you <b>cannot switch between devices while filling this form.</b>
+        You cannot start on your phone and finish on your laptop. The information is only stored on the device
+        that you are using, until you submit the information at the end.
+    </p>
+
+</div>
+
+
+<hr />
+
+
+<div id="personalName">
+
+    <h5 class="stath5"><b>1.</b> Please select your name from the list below:</h5>
+
+    @code{
+        private TypeAheadTim<Person> typeAheadPerson = new TypeAheadTim<Person>();
+    }
+    <TypeAheadTim @ref="typeAheadPerson"
+                   style="max-width:500px;"
+                   DataList="PeopleList"
+                   @bind-SelectedItem="SelectedPerson"
+                   Placeholder="Select person"
+                   SearchFieldName="@(nameof(Person.full_name))"
+                   TModel="Person" />
+</div>
+
+<div id="reviewinfo">
+
+    <h5 class="stath5"><b>2.</b> Please review your personal information</h5>
+
+    <EditForm Model="@Data.PersonalInfo" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+
+        <label id="fullNameLabel" class="statlabel" for="fullName">Full name:</label>
+        <span class="nameLabel"><label id="fullName">@Data.PersonalInfo.FullName</label></span>
+
+		<br />
+
+        <label id="statusLabel" class="statlabel" for="communityStatus">Spanish Lookout Community status:</label>
+        <span class="statuslabel"><label id="slcStatus">@Data.PersonalInfo.SLCStatus</label></span>
+
+		<br />
+
+        <label id="boxNumLabel" class="statlabel" for="boxNum">Box Number:</label>
+        <span class="boxLabel"><label id="boxNum">@Data.PersonalInfo.BoxNumber</label></span>
+
+		<br />
+	
+        <div class="input-container">
+            <label class="statlabel" for="phone">Phone Number:</label>
+            <InputText type="tel" id="phone" class="input" @bind-Value="@Data.PersonalInfo.Phone" placeholder="What's your phone number?" />
+        </div>
+
+        <br /><hr class="statHR" />
+
+        <div class="input-container1">
+            <label class="statlabel" for="email">Email (<i>optional</i>) :</label>
+            <InputText type="email" id="email" class="input" @bind-Value="@Data.PersonalInfo.Email" placeholder="What's your email address?" />
+        </div>
+
+
+
+    </EditForm>
+
+</div>
+
+<div id="roadInfo">
+
+    <h5 class="stath5"><b>3.</b> Road</h5>
+    <p class="forPurpose">For statistical and tax purposes</p>
+
+    <EditForm Model="@Data.RoadData" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add ATV/Cycle
+            </BSButton>
+		<p class="statp">Rate: $100.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add Car/pickup
+            </BSButton>
+            <p class="statp">Rate: $200.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add Single Axle truck
+            </BSButton>
+            <p class="statp">Rate: $300.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add Tandem Axle truck
+            </BSButton>
+            <p class="statp">Rate: $400.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add truck with trailer
+            </BSButton>
+            <p class="statp">Rate: $600.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add semitruck
+            </BSButton>
+            <p class="statp">Rate: $800.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add Tractor: 5 cylinder &amp; smaller
+            </BSButton>
+            <p class="statp">Rate: $60.00</p>
+        </section>
+
+        <section id="buttonCol">
+
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add Tractor: 6 cylinder &amp; bigger
+            </BSButton>
+            <p class="statp">Rate: $100.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add combine
+            </BSButton>
+            <p class="statp">Rate: $100.00</p>
+        </section>
+
+        <section id="buttonCol">
+            <BSButton ButtonType="ButtonType.Button" Size="Size.Small">
+                Add aircraft
+            </BSButton>
+            <p class="statp">Rate: 35 cents/pound</p>
+        </section>
+    </EditForm>
+
+
+
+
+
+</div>
+<section>
+<div id="farmAnimals">
+    <h5 class="stath5" id="farmh5"><b>4.</b> Farm</h5>
+    <p class="forPurpose">For statistical purposes</p>
+
+    <EditForm Model="@Data.FarmData" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+        <p class="stat-p"><em>Quantity of:</em></p>
+      
+
+        <section class="formBit">
+                <label class="statlabel" for="beefCattle"> Beef Cattle:</label><br />
+                <InputNumber id="beefCattle" class="input" @bind-Value="@Data.FarmData.BeefCattle" onwheel="this.blur()" placeholder="Beef cattle..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit2">
+                <label class="statlabel" for="dairyCattle"> Dairy Cattle:</label><br />
+                <InputNumber id="dairyCattle" class="input" @bind-Value="@Data.FarmData.DairyCattle" onwheel="this.blur()" placeholder="Dairy cattle..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit3">
+                <label class="statlabel" for="horses"> Horses:</label><br />
+                <InputNumber id="horses" class="input" @bind-Value="@Data.FarmData.Horses" onwheel="this.blur()" placeholder="Horses..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit4">
+                <label class="statlabel" for="hogs"> Hogs:</label><br />
+                <InputNumber id="hogs" class="input" @bind-Value="@Data.FarmData.Hogs" onwheel="this.blur()" placeholder="Hogs..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit5">
+                <label class="statlabel" for="sheep"> Sheep:</label><br />
+            <InputNumber id="sheep" class="input" @bind-Value="@Data.FarmData.Sheep" onwheel="this.blur()" placeholder="Sheep... " />
+        </section>
+        
+
+        
+
+    <p class="statp" id="perBunch">Number of birds <b>per bunch:</b></p>
+
+        <section class="formBit6">
+                <label class="statlabel" for="hens"> Hens:</label><br />
+                <InputNumber id="hens"  class="input" @bind-Value="@Data.FarmData.Hens" onwheel="this.blur()" placeholder="Hens per bunch..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit7">
+                <label class="statlabel" for="breeders"> Breeders:</label><br />
+                <InputNumber id="breeders" class="input" @bind-Value="@Data.FarmData.Breeders" onwheel="this.blur()" placeholder="Breeders per bunch..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit8">
+                <label class="statlabel" for="pullets"> Pullets:</label><br />
+                <InputNumber id="pullets" class="input" @bind-Value="@Data.FarmData.Pullets" onwheel="this.blur()" placeholder="Pullets per bunch..." />
+        </section>
+
+	
+            <br /><hr class="statHR" />
+
+        <section class="formBit9">
+                <label class="statlabel" for="broilers"> Broilers:</label><br />
+                <InputNumber id="broilers" class="input" @bind-Value="@Data.FarmData.Broilers" onwheel="this.blur()" placeholder="Broilers per bunch..." />
+        </section>
+
+    </EditForm>
+</div>
+</section>
+
+<div id="businessCustomWork">
+
+    <h5 class="stath5"><b>5.</b> Business / Custom Work / Services</h5>
+    <p class="forPurpose">For tax purposes</p>
+
+	<p class="statp">Do you (or a non-member on your land) have business sales, custom work, or services of $10,000 a year or more yearly turnover?</p>
+
+		<div class="container">
+			<section class="yes">
+				<label>
+			<input type="radio" class="option-input radio" name="example" checked />
+    				Yes
+  				</label>
+			</section>
+			<section class="no">
+  				<label>
+    			<input type="radio" class="option-input radio" name="example" />
+    				No
+  				</label>
+			</section>
+		</div>
+            
+
+
+
+    @*If yes, display the following; if no, do not @* *@
+
+        <p class="statp">Please specify the amount for which you have <b>not</b> yet paid tax:</p>
+
+
+            <EditForm Model="@Data.BusinessData" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+	
+
+                <div class="individualForms">
+        	        <label class="statlabel" for="businessReselling"> Business / Reselling:</label><br />
+            		<InputNumber id="businessReselling" class="input" @bind-Value="@Data.BusinessData.BusinessResellingGross"  onwheel="this.blur()" placeholder="$BZ" />
+                </div>
+
+        		    <br /><hr class="statHR" />
+
+                <div class="individualForms">
+        	        <label class="statlabel" for="pavementTax"> Pavement tax:</label><br />
+            		<InputNumber id="pavementTax" class="input" @bind-Value="@Data.BusinessData.PavementTaxGross" onwheel="this.blur()" placeholder="$BZ" />
+                </div>
+
+        		    <br /><hr class="statHR" />
+
+                <div class="individualForms">
+        	        <label class="statlabel" for="customWrkServices"> Custom Work / Services:</label><br />
+            		<InputNumber id="customWrkServices" for="customWrkServices" class="input" @bind-Value="@Data.BusinessData.CustomWorkServicesGross" onwheel="this.blur()" placeholder="$BZ" />
+                </div>
+	
+            </EditForm>
+
+</div>
+ 
+<div id="landData">
+
+    <h5 class="stath5"><b>6.</b> Land</h5>
+    <p class="forPurpose">For statistical purposes</p>
+
+        <EditForm Model="@Data.LandData" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+	
+        	        <label class="statlabel" for="residential" > Residential (<em>all in acres</em>) :</label><br />
+            		<InputNumber id="resLand" for="resLand" class="input" @bind-Value="@Data.LandData.Residential" onwheel="this.blur()" placeholder="Residential acres..." />
+
+        			    <br /><hr class="statHR" />
+
+        	        <label class="statlabel" for="cropLand" > Cropland:</label><br />
+             		<InputNumber id="cropLand" for="cropLand" class="input" @bind-Value="@Data.LandData.CropLand" onwheel="this.blur()" placeholder="Cropland acres..." />
+
+        			    <br /><hr class="statHR" />
+
+        	        <label class="statlabel" for="cowPasture" > Cow pasture:</label><br />
+            		<InputNumber id="cowPasture" for="cowPasture" class="input" @bind-Value="@Data.LandData.CowPasture" onwheel="this.blur()" placeholder="Cow Pasture acres..." />
+
+        			    <br /><hr class="statHR" />
+
+        	        <label class="statlabel" for="jungle" > Jungle:</label><br />
+            		<InputNumber id="jungle" for="jungle" class="input" @bind-Value="@Data.LandData.Jungle" onwheel="this.blur()" placeholder="Jungle acres..." />
+
+        			    <br /><hr class="statHR" />
+
+        	        <label class="statlabel" for="other" > All other land:</label><br />
+            		<InputNumber id="other" for="other" class="input" @bind-Value="@Data.LandData.Other" onwheel="this.blur()" placeholder="Other acres..." />
+
+       				    <br /><hr class="statHR" />
+	
+
+        </EditForm>
+
+</div>
+
+<div id="residence">
+
+    <h5 class="stath5"><b>7.</b> Residence</h5>
+    <p class="forPurpose">For statistical purposes</p>
+
+            @code {
+                public string? PersonName { get; set; }
+            }
+
+        <EditForm Model="@Data.FamilyData" style="max-width:800px;" onkeydown="javascript: DisableEnterKey();">
+
+
+            <p class="statp">How many families and/or individuals are living on your land?</p><br />
+
+		        <label class="statlabel" for="amountOfFamilies" >Amount of families:</label><br />
+		        <InputNumber id="fams" for="indivNum" class="input" @bind-Value="@Data.FamilyData.IndividualAmount" onwheel="this.blur()" placeholder="Families..." />
+
+			        <br /><hr class="statHR" />
+
+		        <label class="statlabel" for="amountOfIndividuals" >Amount of single individuals: </label><br />
+		        <InputNumber id="individuals" for="famNum" class="input" @bind-Value="@Data.FamilyData.FamilyAmount" onwheel="this.blur()" placeholder="Individuals..." />
+
+			        <br /><hr class="statHR" />
+
+                <label class="statlabel" for="names" > Please enter all of the names here:</label><br />
+                <InputTextArea id="names" class="input" rows="4" cols="18" @bind-Value="@PersonName" placeholder="Names of all individuals..."/>
+                
+
+        </EditForm>
+
+</div>
+
+<div id="review">
+
+    <h5 class="stath5"><b>8.</b> Review</h5>
+    <h6 class="stath6"><em>Kindly take the time to check your data for errors before submiting.</em></h6>
+
+
+</div>
+
+</main>
+
